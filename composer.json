@@ -1,11 +1,10 @@
 {
-    "name": "vendor/cngn-manager",
+    "name": "asc/cngn-manager",
     "description": "An opensource library  to give you the best experience with managing your asc merchant account",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Vendor\\CngnManager\\": "src/",
             "ASC\\": "src/",
             "Tests\\": "__test__/"
         }
