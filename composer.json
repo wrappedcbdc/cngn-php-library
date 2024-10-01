@@ -6,7 +6,8 @@
     "autoload": {
         "psr-4": {
             "Vendor\\CngnManager\\": "src/",
-            "ASC\\": "src/"
+            "ASC\\": "src/",
+            "Tests\\": "__test__/"
         }
     },
     "authors": [
@@ -16,5 +17,10 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {}
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.3"
+    }
 }

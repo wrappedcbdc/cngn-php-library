@@ -1,10 +1,9 @@
 <?php
 declare(strict_types=1);
-namespace ASC\Types;
-
+namespace ASC\types;
 
 interface ICNGnManager {
-    public function getBalance(): float;
+    public function getBalance();
     public function getTransactionHistory();
     public function swapBetweenChains();
     public function depositForRedemption();
