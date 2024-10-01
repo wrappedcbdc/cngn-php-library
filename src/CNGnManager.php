@@ -64,32 +64,32 @@ class CNGnManager implements ICNGnManager {
             return json_encode($response);
         }catch (ClientException $e) {
             $error =  Psr7\Message::toString($e->getResponse());
-            return json_decode($error, true);
+            throw $e;
         }
     }
 
-    public function getBalance(){
+    public function getBalance(): string{
         return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/balance");
     }
 
-    public function getTransactionHistory(){
+    public function getTransactionHistory(): string{
         return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/transactions");
     }
 
-    public function swapBetweenChains(){
-        return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/swap");
+    public function swapBetweenChains(array $data): string{
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/swap");
     }
 
-    public function depositForRedemption(){
-        return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/deposit");
+    public function depositForRedemption(array $data): string {
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/deposit");
     }
 
-    public function createVirtualAccount(){
-        return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/createVirtualAccount");
+    public function createVirtualAccount(array $data): string{
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/createVirtualAccount");
     }
 
-    public function whitelistAddress(){
-        return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/whiteListAddress");
+    public function whitelistAddress(array $data): string{
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/whiteListAddress");
     }
 
 
