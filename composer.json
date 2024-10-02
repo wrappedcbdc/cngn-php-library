@@ -9,6 +9,9 @@
             "Tests\\": "__test__/"
         }
     },
+    "scripts": {
+        "test": "./vendor/bin/phpunit __test__"
+    },
     "authors": [
         {
             "name": "Emmanuel Onyo",

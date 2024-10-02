@@ -20,92 +20,105 @@ CNGnManager is a PHP library for interacting with a CNGN API. It provides a simp
 To install CNGnManager and its dependencies, run:
 
 ```bash
-composer require withconvexity/cngn-manager
+composer require wrappedcbdc/cngn-php-library
 ```
 
 ## Usage
 
-First, import the `CNGnManager` class and necessary types:
+First, import the `CNGnManager` class using it namespace ASC\CNGNManager:
 
-```typescript
-import { CNGnManager, Secrets, SwapParams, DepositParams, MintParams, WhiteListAddressParams, Network } from 'cngn-typescript-library';
+```php
+<?php declare(strict_types=1);
+    require __DIR__ ."/vendor/autoload.php";
+    use ASC\CNGnManager;
+    use ASC\types\Enums\{
+        Network
+    }
 ```
 
 Then, create an instance of `CNGnManager` with your secrets:
 
-```typescript
-const secrets: Secrets = {
-    apiKey: 'your-api-key',
-    privateKey: 'your-private-key',
-    encryptionKey: 'your-encryption-key'
-};
+```php
+$apiKey = "cngn_live_sk**********";
+$encryptionKey = "yourencryptionkey";
+$sshPrivateKey = "-----BEGIN OPENSSH PRIVATE KEY-----
+your ssh key
+-----END OPENSSH PRIVATE KEY-----";
 
-const manager = new CNGnManager(secrets);
+#NOTE: You can as well get your private key from a file using
+$sshPrivateKey = file_get_contents("/path/to/sshkey.key");
+
+$manager = new CNGnManager($apiKey, $sshPrivateKey, $encryptionKey);
 
 // Example: Get balance
-manager.getBalance().then(balance => console.log(balance));
+$balance = $manager->getBalance();
+echo $balance;
 ```
 
 ## Available Methods
 
 ### Get Balance
 
-```typescript
-const balance = await manager.getBalance();
-console.log(balance);
+```php
+$balance = $manager->getBalance();
+echo $balance;
 ```
 
 ### Get Transaction History
 
-```typescript
-const transactions = await manager.getTransactionHistory();
-console.log(transactions);
+```php
+$transactions = $manager->getTransactionHistory();
+echo $transaction
 ```
 
 ### Swap Between Chains
 
-```typescript
-const swapParams: SwapParams = {
-    amount: 100,
-    address: '0x1234...',
-    network: Network.bsc
-};
-const swapResult = await manager.swapBetweenChains(swapParams);
-console.log(swapResult);
+```php
+$swapParams = [
+    "amount"=> 100,
+    "address": '0x1234...',
+    "network": Network::bsc
+];
+
+$swapResult =  $manager->swapBetweenChains($swapParams);
+echo $swapResult;
 ```
 
 ### Deposit for Redemption
 
-```typescript
-const depositParams: DepositParams = {
+```php
+$depositParams = [
     amount: 1000,
     bank: 'Example Bank',
     accountNumber: '1234567890'
-};
-const depositResult = await manager.depositForRedemption(depositParams);
-console.log(depositResult);
+];
+
+$depositResult = $manager->depositForRedemption(depositParams);
+echo $depositResult;
 ```
 
 ### Create Virtual Account
 
-```typescript
-const mintParams: MintParams = {
-    provider: 'korapay'
-};
-const virtualAccount = await manager.createVirtualAccount(mintParams);
-console.log(virtualAccount);
+```php
+$mintParams = [
+    "provider"=> 'korapay'
+];
+
+$virtualAccount = $manager->createVirtualAccount(mintParams);
+echo $virtualAccount;
 ```
 
 ### Whitelist Address
 
-```typescript
-const whitelistParams: WhiteListAddressParams = {
-    bscAddress: '0x1234...',
-    bankName: 'Example Bank',
-    bankAccountNumber: '1234567890'
-};
-const whitelistResult = await manager.whitelistAddress(whitelistParams);
-console.log(whitelistResult);
+```php
+$whitelistParams: [
+    "bscAddress" => '0x1234...',
+    "bankName" => 'Example Bank',
+    "bankAccountNumber" => '1234567890'
+];
+
+$whitelistResult = $manager->whitelistAddress(whitelistParams);
+echo $whitelistResult;
 ```
 
 ## Testing
@@ -115,7 +128,7 @@ This project uses Jest for testing. To run the tests, follow these steps:
 1. Run the test command:
 
    ```bash
-   npm test
+   composer run test
    ```
 
    This will run all tests in the `__tests__` directory.
@@ -128,13 +141,17 @@ The tests are located in the `__tests__` directory. They cover various aspects o
 - Encryption and decryption of data
 - Error handling for various scenarios
 
+## Return Values
+
+All responses are returned as a Json string you have to decode it to an object with; `$data = json_decode($response)` or to an array with; `$data = json_decode($response, true)` .
+
 ## Error Handling
 
 The library uses a custom error handling mechanism. All API errors are caught and thrown as `Error` objects with descriptive messages.
 
 ## Types
 
-The library includes TypeScript definitions for all parameters and return types. Please refer to the type definitions in the source code for more details.
+The library includes php definitions for all parameters and return types. Please refer to the type definitions in the source code for more details.
 
 ## Security
 
@@ -142,7 +159,7 @@ This library uses AES encryption for request payloads and Ed25519 decryption for
 
 ## Contributing
 
-Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/asc-africa/cngn-manager/issues) if you want to contribute.
+Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/wrappedcbdc/cngn-php-library/issues) if you want to contribute.
 
 ## Support
 
