@@ -47,24 +47,50 @@ class CNGnManager implements ICNGnManager {
 
         try {
 
-            if(($data)){
+            if(!empty($data)){
                 $newdata = json_encode($data);
                 $encrypt = $AESCrypto->encrypt($newdata, $this->encryptionKey);
                 $data = $encrypt;
-            }
+                $request = $this->client->request($method, $endpoint, [
+                    'json' => $data
+                ]);
 
-            $request = $this->client->request($method, $endpoint, [
-                'json' => $data
-            ]);
+            }else{
+                $request = $this->client->request($method, $endpoint);
+            }
 
             $response = json_decode($request->getBody()->getContents(), true);
             $decryptedResponse = $Ed25519Crypto->decryptWithPrivateKey($this->privateKey, $response["data"]);
 
             $response["data"] = json_decode($decryptedResponse, true);
             return json_encode($response);
-        }catch (ClientException $e) {
-            $error =  Psr7\Message::toString($e->getResponse());
-            throw $e;
+
+        }catch (ClientException | RequestException $e) {
+            // Handle and log error, return a JSON response with error details
+            $errorBody = [
+                'success' => false,
+                'error' => 'API request failed',
+                'message' => $e->getMessage(),
+                'status_code' => $e->getCode(),
+            ];
+
+            if ($e->hasResponse()) {
+                $resp = json_decode($e->getResponse()->getBody()->getContents(), true);
+                $message = json_decode($resp['message'], true);
+                
+                $resp["message"] = $message;
+                return json_encode($resp);
+            }
+
+            // Return error details as JSON without throwing the error
+            return json_encode($errorBody);
+        } catch (\Exception $e) {
+            // Catch any other exceptions and return a JSON error
+            return json_encode([
+                'success' => false,
+                'error' => 'An unexpected error occurred',
+                'message' => $e->getMessage()
+            ]);
         }
     }
 
@@ -77,19 +103,19 @@ class CNGnManager implements ICNGnManager {
     }
 
     public function swapBetweenChains(array $data): string{
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/swap");
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/swap", $data);
     }
 
     public function depositForRedemption(array $data): string {
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/deposit");
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/deposit", $data);
     }
 
     public function createVirtualAccount(array $data): string{
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/createVirtualAccount");
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/createVirtualAccount", $data);
     }
 
     public function whitelistAddress(array $data): string{
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/whiteListAddress");
+        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/whiteListAddress", $data);
     }
 
 
