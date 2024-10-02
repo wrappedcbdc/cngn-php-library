@@ -6,6 +6,7 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . "/utils/AESCrypto.php";
 require __DIR__ . "/utils/Ed25519Crypto.php";
 
+use ASC\config\Constants;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
 use ASC\utils\AESCrypto;
@@ -18,14 +19,13 @@ use ASC\utils\Ed25519Crypto;
 
 
 class CNGnManager implements ICNGnManager {
-    
+    protected const API_URL = "https://staging.api.wrapcbdc.com";
+    protected const API_CURRENT_VERSION = "v1";
     protected $client;
-    protected $API_CURRENT_VERSION = 'v1';
-
     public function __construct(private string $apiKey, private string $privateKey, private string $encryptionKey ){
 
        $this->client = new Client([
-            'base_uri' => "https://staging.api.wrapcbdc.com",
+            'base_uri' => self::API_URL,
             'headers' => [
                 'Authorization' => "Bearer $this->apiKey",
                 'Content-Type' => 'application/json',
@@ -95,27 +95,27 @@ class CNGnManager implements ICNGnManager {
     }
 
     public function getBalance(): string{
-        return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/balance");
+        return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/balance");
     }
 
     public function getTransactionHistory(): string{
-        return $this->__makeCalls("GET", "/$this->API_CURRENT_VERSION/api/transactions");
+        return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/transactions");
     }
 
     public function swapBetweenChains(array $data): string{
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/swap", $data);
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/swap", $data);
     }
 
     public function depositForRedemption(array $data): string {
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/deposit", $data);
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/deposit", $data);
     }
 
     public function createVirtualAccount(array $data): string{
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/createVirtualAccount", $data);
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/createVirtualAccount", $data);
     }
 
     public function whitelistAddress(array $data): string{
-        return $this->__makeCalls("POST", "/$this->API_CURRENT_VERSION/api/whiteListAddress", $data);
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/whiteListAddress", $data);
     }
 
 

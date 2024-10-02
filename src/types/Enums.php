@@ -1,11 +1,12 @@
 <?php
-namespace ASC\types\Enums;
+namespace ASC\types;
 
-enum Network {
-    case bsc;    
-    case atc;
-    case xbn;
-    case eth;
-    case matic;
-    case trx;
+enum Enums: string {
+    case BSC = 'bsc';    
+    case ATC = 'atc';
+    case XBN = 'xbn';
+    case ETH = 'eth';
+    case MATIC = 'matic';
+    case TRX = 'trx';
 }
+

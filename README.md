@@ -25,15 +25,13 @@ composer require wrappedcbdc/cngn-php-library
 
 ## Usage
 
-First, import the `CNGnManager` class using it namespace ASC\CNGNManager:
+First, import the `CNGnManager` class using it namespace ASC\CNGNManager: and all necessary constants.
 
 ```php
 <?php declare(strict_types=1);
     require __DIR__ ."/vendor/autoload.php";
     use ASC\CNGnManager;
-    use ASC\types\Enums\{
-        Network
-    }
+    use ASC\constants\{Network, ProviderType};
 ```
 
 Then, create an instance of `CNGnManager` with your secrets:
@@ -76,8 +74,8 @@ echo $transaction
 ```php
 $swapParams = [
     "amount"=> 100,
-    "address": '0x1234...',
-    "network": Network::bsc
+    "address" => '0x1234...',
+    "network" => Network::BSC
 ];
 
 $swapResult =  $manager->swapBetweenChains($swapParams);
@@ -88,12 +86,12 @@ echo $swapResult;
 
 ```php
 $depositParams = [
-    amount: 1000,
-    bank: 'Example Bank',
-    accountNumber: '1234567890'
+    "amount"=> 1000,
+    "bank"=> 'Example Bank',
+    "accountNumber"=> '1234567890'
 ];
 
-$depositResult = $manager->depositForRedemption(depositParams);
+$depositResult = $manager->depositForRedemption($depositParams);
 echo $depositResult;
 ```
 
@@ -101,10 +99,10 @@ echo $depositResult;
 
 ```php
 $mintParams = [
-    "provider"=> 'korapay'
+    "provider"=> ProviderType::KORAPAY
 ];
 
-$virtualAccount = $manager->createVirtualAccount(mintParams);
+$virtualAccount = $manager->createVirtualAccount($mintParams);
 echo $virtualAccount;
 ```
 

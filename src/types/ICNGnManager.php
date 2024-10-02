@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace ASC\types;
 
+use ASC\constants\AssetType;
+
 interface ICNGnManager {
     public function getBalance(): string;
     public function getTransactionHistory(): string;
@@ -9,4 +11,5 @@ interface ICNGnManager {
     public function depositForRedemption(array $data): string;
     public function createVirtualAccount(array $data): string;
     public function whitelistAddress(array $data): string;
-}
+};
+
