@@ -1,11 +1,11 @@
 {
     "name": "wrappedcbdc/cngn-php-library",
-    "description": "An opensource library  to give you the best experience with managing your asc merchant account",
+    "description": "An opensource library  to give you the best experience with managing your cNGN merchant account",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "ASC\\": "src/",
+            "WrappedCBDC\\": "src/",
             "Tests\\": "__test__/"
         }
     },

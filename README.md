@@ -25,13 +25,13 @@ composer require wrappedcbdc/cngn-php-library
 
 ## Usage
 
-First, import the `CNGnManager` class using it namespace ASC\CNGNManager: and all necessary constants.
+First, import the `CNGnManager` class using it namespace WrappedCBDC\CNGNManager: and all necessary constants.
 
 ```php
 <?php declare(strict_types=1);
     require __DIR__ ."/vendor/autoload.php";
-    use ASC\CNGnManager;
-    use ASC\constants\{Network, ProviderType};
+    use WrappedCBDC\CNGnManager;
+    use WrappedCBDC\constants\{Network, ProviderType};
 ```
 
 Then, create an instance of `CNGnManager` with your secrets:

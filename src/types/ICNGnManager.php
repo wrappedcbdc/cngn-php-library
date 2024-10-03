@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
-namespace ASC\types;
+namespace WrappedCBDC\types;
 
-use ASC\constants\AssetType;
+use WrappedCBDC\constants\AssetType;
 
 interface ICNGnManager {
     public function getBalance(): string;

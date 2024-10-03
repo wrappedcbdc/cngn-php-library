@@ -1,5 +1,5 @@
 <?php
-namespace ASC\types;
+namespace WrappedCBDC\types;
 
 enum Enums: string {
     case BSC = 'bsc';    

@@ -1,21 +1,21 @@
 <?php
 declare(strict_types=1);
-namespace ASC;
+namespace WrappedCBDC;
 
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . "/utils/AESCrypto.php";
 require __DIR__ . "/utils/Ed25519Crypto.php";
 
-use ASC\config\Constants;
+use WrappedCBDC\config\Constants;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
-use ASC\utils\AESCrypto;
+use WrappedCBDC\utils\AESCrypto;
 use GuzzleHttp\Exception\{
     ClientException,
     RequestException
 };
-use ASC\types\ICNGnManager;
-use ASC\utils\Ed25519Crypto;
+use WrappedCBDC\types\ICNGnManager;
+use WrappedCBDC\utils\Ed25519Crypto;
 
 
 class CNGnManager implements ICNGnManager {

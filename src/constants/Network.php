@@ -1,6 +1,6 @@
 <?php
 
-namespace ASC\constants;
+namespace WrappedCBDC\constants;
 
 class Network
 {
