@@ -1,6 +1,7 @@
 <?php
 namespace WrappedCBDC\utils;
 
+use Exception;
 
 class AESCrypto
 {
@@ -39,7 +40,10 @@ class AESCrypto
 
         // Decrypt the data
         $decrypted = openssl_decrypt($encryptedContent, self::ALGORITHM, $keyBuffer, OPENSSL_RAW_DATA, $iv);
-
+        
+        if(!$decrypted){
+            throw new Exception("Unable to decrypt data");
+        }
         return $decrypted;
     }
 }
