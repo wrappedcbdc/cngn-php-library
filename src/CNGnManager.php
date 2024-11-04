@@ -102,12 +102,12 @@ class CNGnManager implements ICNGnManager {
         return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/transactions");
     }
 
-    public function swapBetweenChains(array $data): string{
-        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/swap", $data);
+    public function withdraw(array $data): string{
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/withdraw", $data);
     }
 
-    public function depositForRedemption(array $data): string {
-        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/deposit", $data);
+    public function redeenAssets(array $data): string {
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/redeemAsset", $data);
     }
 
     public function createVirtualAccount(array $data): string{
@@ -115,7 +115,11 @@ class CNGnManager implements ICNGnManager {
     }
 
     public function whitelistAddress(array $data): string{
-        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/whiteListAddress", $data);
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/updateBusiness", $data);
+    }
+
+    public function getBanks(): string{
+        return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/banks");
     }
 
 

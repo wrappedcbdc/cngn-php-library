@@ -7,8 +7,9 @@ use WrappedCBDC\constants\AssetType;
 interface ICNGnManager {
     public function getBalance(): string;
     public function getTransactionHistory(): string;
-    public function swapBetweenChains(array $data): string;
-    public function depositForRedemption(array $data): string;
+    public function withdraw(array $data): string;
+    public function getBanks(): string;
+    public function redeenAssets(array $data): string;
     public function createVirtualAccount(array $data): string;
     public function whitelistAddress(array $data): string;
 };

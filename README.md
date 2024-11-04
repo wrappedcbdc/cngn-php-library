@@ -52,50 +52,67 @@ $manager = new CNGnManager($apiKey, $sshPrivateKey, $encryptionKey);
 $balance = $manager->getBalance();
 echo $balance;
 ```
+## Networks
+
+The library supports multiple blockchain networks:
+
+- `Network.BSC` - Binance Smart Chain
+- `Network.ATC` - Asset Chain
+- `Network.XBN` - Bantu Chain
+- `Network.ETTH` - Ethereum
+- `Network.MATIC` - Polygon (Matic)
+- `Network.TRX` - Tron
+- `Network.BASE` - Base
+
 
 ## Available Methods
 
-### Get Balance
+### cNGNManager Methods
+
+#### Get Balance
 
 ```php
 $balance = $manager->getBalance();
 echo $balance;
 ```
 
-### Get Transaction History
+#### Get Transaction History
 
 ```php
 $transactions = $manager->getTransactionHistory();
 echo $transaction
 ```
 
-### Swap Between Chains
+#### Withdraw from chains
 
 ```php
 $swapParams = [
     "amount"=> 100,
     "address" => '0x1234...',
-    "network" => Network::BSC
+    "network" => Network::BSC,
+    "shouldSaveAddress" => true
 ];
 
-$swapResult =  $manager->swapBetweenChains($swapParams);
+$swapResult =  $manager->withdraw($swapParams);
 echo $swapResult;
 ```
 
-### Deposit for Redemption
+#### Redeem Asset
 
 ```php
 $depositParams = [
     "amount"=> 1000,
-    "bank"=> 'Example Bank',
+    "bank"=> '011',
     "accountNumber"=> '1234567890'
+    "saveDetails" => true
 ];
 
 $depositResult = $manager->depositForRedemption($depositParams);
 echo $depositResult;
 ```
+NOTE: to get bank codes please use the getBanks method to fetch the list of banks and ther codes 
 
-### Create Virtual Account
+#### Create Virtual Account
 
 ```php
 $mintParams = [
@@ -105,19 +122,62 @@ $mintParams = [
 $virtualAccount = $manager->createVirtualAccount($mintParams);
 echo $virtualAccount;
 ```
+NOTE: before creating the virtual account you need to have updated your BVN on the dashboard
 
-### Whitelist Address
+#### Update Business
+
+Address Options:
+- "xbnAddress": "string";
+- "bscAddress": "string";
+- "atcAddress": "string";
+- "polygonAddress": "string";
+- "ethAddress": "string";
+- "tronAddress": "string";
+- "baseAddress": "string";
+- "bantuUserId": "string";
 
 ```php
-$whitelistParams: [
-    "bscAddress" => '0x1234...',
-    "bankName" => 'Example Bank',
-    "bankAccountNumber" => '1234567890'
+$updateData: [
+    "walletAddress" => [
+        "bscAddress" => '0x1234...',
+    ],
+    "bankDetails" => [
+        "bankName" => 'Example Bank',
+        "bankAccountName" => 'Test Account',
+        "bankAccountNumber" => '1234567890'
+    ]
 ];
 
-$whitelistResult = $manager->whitelistAddress(whitelistParams);
-echo $whitelistResult;
+$updateResult = $manager->whitelistAddress($updateData);
+echo $updateResult;
 ```
+
+#### Get banks
+```php
+
+$banklist = $manager->getBanks();
+print($banklist)
+
+```
+
+### WalletManager Methods
+
+#### Generate Wallet Address
+Not Available a the moment 
+<!-- ```python
+    wallet = WalletManager.generate_wallet_address(Network.bsc);
+```
+
+Response format:
+```php
+ {
+    "mnemonic" : "string";
+    "address": "string";
+    "network": Network;
+    "privateKey": "string";
+}
+``` -->
+
 
 ## Testing
 
@@ -149,7 +209,11 @@ The library uses a custom error handling mechanism. All API errors are caught an
 
 ## Types
 
-The library includes php definitions for all parameters and return types. Please refer to the type definitions in the source code for more details.
+The library includes python constant classes for all parameters:
+
+- `Network` - token network
+- `AssetType` - Asset constants
+- `ProviderType` - provider constants
 
 ## Security
 
@@ -159,9 +223,19 @@ This library uses AES encryption for request payloads and Ed25519 decryption for
 
 Contributions, issues, and feature requests are welcome. Feel free to check [issues page](https://github.com/wrappedcbdc/cngn-php-library/issues) if you want to contribute.
 
+To contribute:
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Create a Pull Request
+
+
 ## Support
 
-If you have any questions or need help using the library, please open an issue in the GitHub repository.
+For support, please:
+- Open an issue in the GitHub repository
+- Check existing documentation
+- Contact the support team
 
 ## License
 
