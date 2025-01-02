@@ -79,8 +79,10 @@ echo $balance;
 #### Get Transaction History
 
 ```php
-$transactions = $manager->getTransactionHistory();
-echo $transaction
+$page = 1;
+$limit = 10;
+$transactions = $manager->getTransactionHistory($page, $limit);
+echo $transaction;
 ```
 
 #### Withdraw from chains
@@ -102,12 +104,12 @@ echo $swapResult;
 ```php
 $depositParams = [
     "amount"=> 1000,
-    "bank"=> '011',
+    "bankCode"=> '011',
     "accountNumber"=> '1234567890'
     "saveDetails" => true
 ];
 
-$depositResult = $manager->depositForRedemption($depositParams);
+$depositResult = $manager->redeemAssets($depositParams);
 echo $depositResult;
 ```
 NOTE: to get bank codes please use the getBanks method to fetch the list of banks and ther codes 
@@ -116,13 +118,32 @@ NOTE: to get bank codes please use the getBanks method to fetch the list of bank
 
 ```php
 $mintParams = [
-    "provider"=> ProviderType::KORAPAY
+    "provider"=> ProviderType::KORAPAY,
+    "bank_code" => '011'
 ];
 
 $virtualAccount = $manager->createVirtualAccount($mintParams);
 echo $virtualAccount;
 ```
 NOTE: before creating the virtual account you need to have updated your BVN on the dashboard
+
+
+#### Swap Assets 
+
+```php
+$swapData = [
+    "destinationNetwork"=> Network::BSC,
+    "destinationAddress" => "0x123....",
+    "originNetwork" => Network::ETH
+    "callbackUrl" => 'https://your-callback-url.com'
+];
+
+$swapResult = $manager->swapAsset($swapData);
+echo $swapResult;
+```
+NOTE: before creating the virtual account you need to have updated your BVN on the dashboard
+
+
 
 #### Update Business
 
@@ -148,7 +169,7 @@ $updateData: [
     ]
 ];
 
-$updateResult = $manager->whitelistAddress($updateData);
+$updateResult = $manager->updateExternalAccounts($updateData);
 echo $updateResult;
 ```
 

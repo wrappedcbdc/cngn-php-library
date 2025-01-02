@@ -10,4 +10,5 @@ class Network
     const ETH = 'eth';
     const MATIC = 'matic';
     const TRX = 'trx';
+    const BASE = "base";
 }

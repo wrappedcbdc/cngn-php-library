@@ -19,7 +19,7 @@ use WrappedCBDC\utils\Ed25519Crypto;
 
 
 class CNGnManager implements ICNGnManager {
-    protected const API_URL = "https://staging.api.wrapcbdc.com";
+    protected const API_URL = "https://api.cngn.co";
     protected const API_CURRENT_VERSION = "v1";
     protected $client;
     public function __construct(private string $apiKey, private string $privateKey, private string $encryptionKey ){
@@ -98,15 +98,15 @@ class CNGnManager implements ICNGnManager {
         return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/balance");
     }
 
-    public function getTransactionHistory(): string{
-        return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/transactions");
+    public function getTransactionHistory(int $page = 1, int $limit = 10): string{
+        return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/transactions?page=$page&limit=$limit");
     }
 
     public function withdraw(array $data): string{
         return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/withdraw", $data);
     }
 
-    public function redeenAssets(array $data): string {
+    public function redeemAssets(array $data): string {
         return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/redeemAsset", $data);
     }
 
@@ -114,7 +114,7 @@ class CNGnManager implements ICNGnManager {
         return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/createVirtualAccount", $data);
     }
 
-    public function whitelistAddress(array $data): string{
+    public function updateExternalAccounts(array $data): string{
         return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/updateBusiness", $data);
     }
 
@@ -122,6 +122,9 @@ class CNGnManager implements ICNGnManager {
         return $this->__makeCalls("GET", "/".self::API_CURRENT_VERSION."/api/banks");
     }
 
+    public function swapAssets(array $data): string{
+        return $this->__makeCalls("POST", "/".self::API_CURRENT_VERSION."/api/swap", $data);
+    }
 
 
 }
